@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of Drip | Sneaker & Streetwear Catalogue</title>
+    <!-- Font Awesome for icons (WhatsApp, Call, Arrow) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f5f5f7;
+            padding: 20px 20px 40px;
+        }
+
+        /* MAIN CONTAINER */
+        .store-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px 32px 24px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            padding: 30px 30px 20px;
+        }
+
+        /* HEADER: logo, location, contact & admin */
+        .store-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeef2;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            font-size: 2.4rem;
+            background: #111;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #0b0b0b;
+            line-height: 1.1;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: #5e6f7e;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .contact-block {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 28px;
+            background: #f8fafd;
+            padding: 12px 24px;
+            border-radius: 60px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: #1f2a36;
+        }
+
+        .location i {
+            color: #d32f2f;
+            font-size: 1.2rem;
+        }
+
+        .contact-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .contact-actions a {
+            text-decoration: none;
+            color: #1f2a36;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .contact-actions a:hover {
+            background: #111;
+            color: white;
+            border-color: #111;
+        }
+
+        .contact-actions a i {
+            font-size: 1.3rem;
+        }
+
+        .whatsapp-btn i {
+            color: #25D366;
+        }
+
+        .contact-actions a:hover .whatsapp-btn i {
+            color: white;
+        }
+
+        .call-btn i {
+            color: #0a66c2;
+        }
+
+        .contact-actions a:hover .call-btn i {
+            color: white;
+        }
+
+        /* ADMIN LOGIN / OWNER CONTROL */
+        .owner-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .admin-login-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+        }
+
+        .admin-login-btn i {
+            font-size: 1rem;
+        }
+
+        .admin-login-btn:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        .admin-status {
+            font-size: 0.9rem;
+            background: #e6f7e6;
+            color: #0f7b0f;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-status i {
+            font-size: 0.8rem;
+        }
+
+        /* CATALOGUE GRID */
+        .catalogue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 28px 18px;
+            margin-top: 25px;
+        }
+
+        /* PRODUCT CARD */
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.07);
+            transform: translateY(-4px);
+            border-color: #d0dae8;
+        }
+
+        /* color & arrow area */
+        .color-showcase {
+            background: #fbfdff;
+            padding: 20px 15px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eef2f6;
+            position: relative;
+        }
+
+        .color-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .shoe-color-box {
+            width: 100%;
+            height: 120px;
+            border-radius: 18px;
+            background: #eef2f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            background-size: cover;
+            background-position: center;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: 1px;
+        }
+
+        .color-label {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4b5e71;
+            letter-spacing: 0.6px;
+            background: #eef2f6;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+
+        .arrow-btn {
+            background: white;
+            border: 1px solid #d9e2ec;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #0b1b2b;
+            cursor: pointer;
+            transition: 0.15s;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .arrow-btn:hover {
+            background: #0b1b2b;
+            color: white;
+            border-color: #0b1b2b;
+        }
+
+        .arrow-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* product info */
+        .product-details {
+            padding: 16px 18px 18px;
+            background: white;
+            text-align: center;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #0b1b2b;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+
+        .normal-price {
+            color: #8a9aa9;
+            text-decoration: line-through;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .sale-price {
+            color: #d32f2f;
+            font-weight: 800;
+            background: #fff0f0;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        /* --- ADMIN PANEL (modal-like) --- */
+        .admin-panel {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 30px;
+            margin: 30px 0 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-panel h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #0b1b2b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            flex: 1 1 200px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #5f6c7e;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 0.4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0dae8;
+            border-radius: 16px;
+            font-size: 1rem;
+            background: #fafcff;
+        }
+
+        .form-group input:focus {
+            outline: 2px solid #0b1b2b;
+            border-color: transparent;
+        }
+
+        .btn-primary {
+            background: #0b1b2b;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #1f2e42;
+        }
+
+        .btn-secondary {
+            background: #eef2f6;
+            color: #1f2a36;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .btn-secondary:hover {
+            background: #d9e2ec;
+        }
+
+        .admin-note {
+            font-size: 0.85rem;
+            color: #5f6c7e;
+            margin-top: 16px;
+            border-left: 3px solid #d32f2f;
+            padding-left: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* footer */
+        .store-footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #8a9aa9;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeef2;
+            padding-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="store-container" id="storeContainer">
+        <!-- HEADER -->
+        <div class="store-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>House of Drip</h1>
+                    <p>sneakers · streetwear · exclusive</p>
+                </div>
+            </div>
+            <div class="contact-block">
+                <div class="location">
+                    <i class="fas fa-map-pin"></i> 123 Main Street, Mbabane, Eswatini
+                </div>
+                <div class="contact-actions">
+                    <!-- WhatsApp icon / link -->
+                    <a href="https://wa.me/26876123456" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
+                        <i class="fab fa-whatsapp"></i> +268 7612 3456
+                    </a>
+                    <!-- Call button (speed dial) -->
+                    <a href="tel:+26876123456" class="call-btn" title="Call us">
+                        <i class="fas fa-phone-alt"></i> +268 7612 3456
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- OWNER / ADMIN ACCESS BAR -->
+        <div class="owner-bar">
+            <div id="adminStatusMessage" class="admin-status hidden">
+                <i class="fas fa-check-circle"></i> Admin mode: you can upload items
+            </div>
+            <button class="admin-login-btn" id="adminLoginBtn">
+                <i class="fas fa-user-lock"></i> Admin login
+            </button>
+        </div>
+
+        <!-- ADMIN UPLOAD PANEL (hidden by default) -->
+        <div class="admin-panel" id="adminPanel">
+            <h3><i class="fas fa-cloud-upload-alt"></i> Upload new product</h3>
+            <div class="admin-form-row">
+                <div class="form-group">
+                    <label>Product name</label>
+                    <input type="text" id="newProductName" placeholder="e.g. Air Max 90">
+                </div>
+                <div class="form-group">
+                    <label>Normal price (E)</label>
+                    <input type="number" id="newNormalPrice" placeholder="900" value="900">
+                </div>
+                <div class="form-group">
+                    <label>Sale price (E)</label>
+                    <input type="number" id="newSalePrice" placeholder="800" value="800">
+                </div>
+            </div>
+            <div class="admin-form-row">
+                <div class="form-group">
+                    <label>Colours (comma separated)</label>
+                    <input type="text" id="newColors" placeholder="Black/White, Red/Black, Blue" value="Black/White, Red/Black, Blue">
+                </div>
+                <button class="btn-primary" id="uploadProductBtn"><i class="fas fa-plus-circle"></i> Upload item</button>
+                <button class="btn-secondary" id="cancelAdminBtn">Cancel</button>
+            </div>
+            <div class="admin-note">
+                <i class="fas fa-info-circle"></i> After uploading, the item is saved and appears instantly in the catalogue.
+            </div>
+        </div>
+
+        <!-- CATALOGUE GRID (25 items) -->
+        <div class="catalogue-grid" id="catalogueGrid"></div>
+
+        <!-- FOOTER -->
+        <div class="store-footer">
+            © House of Drip — all prices in E (Emalangeni). Click WhatsApp or call to order.
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- CONFIGURATION ----------
+            // 25 products base list. Each product has: name, normalPrice, salePrice, colors array, currentColorIndex
+            const baseProducts = [
+                { name: "Jordan Sneakers", normalPrice: 900, salePrice: 800, colors: ["Black/Red", "White/Blue", "Grey/Volt"], colorIndex: 0 },
+                { name: "Air Force 1", normalPrice: 1200, salePrice: 1050, colors: ["Triple White", "Black", "Shadow"], colorIndex: 0 },
+                { name: "Yeezy Boost 350", normalPrice: 2500, salePrice: 2200, colors: ["Zebra", "Cream", "Onyx"], colorIndex: 0 },
+                { name: "Dunk Low", normalPrice: 1100, salePrice: 950, colors: ["Panda", "Grey Fog", "University Red"], colorIndex: 0 },
+                { name: "Air Max 97", normalPrice: 1400, salePrice: 1250, colors: ["Silver Bullet", "Gold", "Black"], colorIndex: 0 },
+                { name: "Hoodie Essentials", normalPrice: 800, salePrice: 650, colors: ["Oatmeal", "Black", "Olive"], colorIndex: 0 },
+                { name: "Cargo Pants", normalPrice: 700, salePrice: 580, colors: ["Khaki", "Black", "Grey"], colorIndex: 0 },
+                { name: "Denim Jacket", normalPrice: 950, salePrice: 790, colors: ["Blue", "Black", "Light Wash"], colorIndex: 0 },
+                { name: "Snapback Cap", normalPrice: 350, salePrice: 280, colors: ["Black", "Navy", "Red"], colorIndex: 0 },
+                { name: "Crossbody Bag", normalPrice: 550, salePrice: 450, colors: ["Black", "Tan", "Green"], colorIndex: 0 },
+                { name: "Socks (3-pack)", normalPrice: 200, salePrice: 150, colors: ["White", "Black", "Mixed"], colorIndex: 0 },
+                { name: "Puffer Vest", normalPrice: 1300, salePrice: 1100, colors: ["Black", "Red", "Navy"], colorIndex: 0 },
+                { name: "Track Pants", normalPrice: 650, salePrice: 520, colors: ["Grey", "Black", "Navy"], colorIndex: 0 },
+                { name: "Crewneck Sweat", normalPrice: 750, salePrice: 620, colors: ["Heather Grey", "Black", "Forest"], colorIndex: 0 },
+                { name: "Belt Bag", normalPrice: 450, salePrice: 380, colors: ["Black", "Camo", "Tan"], colorIndex: 0 },
+                { name: "Beanie", normalPrice: 250, salePrice: 190, colors: ["Black", "Grey", "Burgundy"], colorIndex: 0 },
+                { name: "Windbreaker", normalPrice: 980, salePrice: 820, colors: ["Neon", "Black", "Royal Blue"], colorIndex: 0 },
+                { name: "Graphic Tee", normalPrice: 400, salePrice: 320, colors: ["White", "Black", "Sand"], colorIndex: 0 },
+                { name: "Shorts", normalPrice: 480, salePrice: 390, colors: ["Black", "Navy", "Olive"], colorIndex: 0 },
+                { name: "Sunglasses", normalPrice: 600, salePrice: 480, colors: ["Black", "Tortoise", "Silver"], colorIndex: 0 },
+                { name: "Chain Necklace", normalPrice: 700, salePrice: 560, colors: ["Gold", "Silver", "Rose Gold"], colorIndex: 0 },
+                { name: "Backpack", normalPrice: 850, salePrice: 720, colors: ["Black", "Grey", "Navy"], colorIndex: 0 },
+                { name: "Slides", normalPrice: 350, salePrice: 280, colors: ["Black", "White", "Red"], colorIndex: 0 },
+                { name: "Hooded Jacket", normalPrice: 1100, salePrice: 920, colors: ["Black", "Olive", "Grey"], colorIndex: 0 },
+                { name: "Crew Socks (5-pack)", normalPrice: 300, salePrice: 240, colors: ["White", "Black", "Assorted"], colorIndex: 0 }
+            ];
+
+            // Load from localStorage or use baseProducts
+            let products = JSON.parse(localStorage.getItem('houseOfDripProducts')) || baseProducts.map(p => ({ ...p, colorIndex: 0 }));
+
+            // Ensure every product has colors array and colorIndex
+            products = products.map(p => ({
+                ...p,
+                colors: p.colors || ["Default"],
+                colorIndex: p.colorIndex || 0
+            }));
+
+            // DOM elements
+            const grid = document.getElementById('catalogueGrid');
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const adminPanel = document.getElementById('adminPanel');
+            const adminStatusMessage = document.getElementById('adminStatusMessage');
+            const uploadBtn = document.getElementById('uploadProductBtn');
+            const cancelAdminBtn = document.getElementById('cancelAdminBtn');
+
+            // Track admin session (simple simulation - not secure, just UI demo)
+            let isAdmin = false;
+
+            // ---------- RENDER CATALOGUE ----------
+            function renderCatalogue() {
+                grid.innerHTML = '';
+                products.forEach((product, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.dataset.productIndex = index;
+
+                    // current colour (safely)
+                    const colors = product.colors && product.colors.length ? product.colors : ["Default"];
+                    const colorIdx = (product.colorIndex || 0) % colors.length;
+                    const currentColor = colors[colorIdx];
+
+                    // format prices with E
+                    const normalFormatted = `E${product.normalPrice}`;
+                    const saleFormatted = `E${product.salePrice}`;
+
+                    card.innerHTML = `
+                        <div class="color-showcase">
+                            <div class="color-preview">
+                                <div class="shoe-color-box" style="background: ${getColorStyle(currentColor)}; color: ${getTextColor(currentColor)};">
+                                    ${currentColor}
+                                </div>
+                                <div class="color-label">${colors.length > 1 ? 'colour ' + (colorIdx+1) + '/' + colors.length : 'only colour'}</div>
+                            </div>
+                            <button class="arrow-btn" data-index="${index}" title="Next colour"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="product-details">
+                            <div class="product-name">${product.name}</div>
+                            <div class="price-row">
+                                <span class="normal-price">${normalFormatted}</span>
+                                <span class="sale-price">${saleFormatted}</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Attach arrow click listeners
+                document.querySelectorAll('.arrow-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const idx = parseInt(this.dataset.index, 10);
+                        cycleColor(idx);
+                    });
+                });
+            }
+
+            // Helper for background style based on colour name (simple mapping)
+            function getColorStyle(colorName) {
+                const map = {
+                    'black/red': 'linear-gradient(135deg, #222 40%, #b22222 60%)',
+                    'white/blue': 'linear-gradient(135deg, #f0f0f0 40%, #1e3a8a 60%)',
+                    'grey/volt': 'linear-gradient(135deg, #6b7280 40%, #d4ff00 60%)',
+                    'triple white': '#f8f8f8',
+                    'black': '#1e1e1e',
+                    'shadow': '#2f2f2f',
+                    'zebra': 'repeating-linear-gradient(45deg, #fff 0px, #fff 10px, #000 10px, #000 20px)',
+                    'cream': '#f5f0e1',
+                    'onyx': '#353839',
+                    'panda': '#f0f0f0',
+                    'grey fog': '#b0b0b0',
+                    'university red': '#c41e3a',
+                    'silver bullet': '#c0c0c0',
+                    'gold': '#d4af37',
+                    'oatmeal': '#e8d9c5',
+                    'olive': '#556b2f',
+                    'khaki': '#c3b091',
+                    'grey': '#808080',
+                    'blue': '#3b5b8c',
+                    'light wash': '#b0c4de',
+                    'navy': '#000080',
+                    'red': '#c62828',
+                    'tan': '#d2b48c',
+                    'green': '#2e7d32',
+                    'white': '#ffffff',
+                    'mixed': 'linear-gradient(90deg, #fff, #000)',
+                    'heather grey': '#a0a0a0',
+                    'forest': '#228b22',
+                    'camo': 'repeating-linear-gradient(45deg, #4b5320, #4b5320 8px, #6b8e23 8px, #6b8e23 16px)',
+                    'burgundy': '#800020',
+                    'neon': '#39ff14',
+                    'royal blue': '#4169e1',
+                    'sand': '#e3cbaa',
+                    'tortoise': 'repeating-linear-gradient(45deg, #8b5a2b, #8b5a2b 6px, #3e2a1f 6px, #3e2a1f 12px)',
+                    'silver': '#c0c0c0',
+                    'rose gold': '#b76e79',
+                    'assorted': 'linear-gradient(90deg, #ff0000, #00ff00, #0000ff)'
+                };
+                const key = colorName.toLowerCase().trim();
+                return map[key] || `hsl(${colorName.length * 37 % 360}, 70%, 70%)`;
+            }
+
+            function getTextColor(colorName) {
+                const lightColors = ['white', 'cream', 'oatmeal', 'sand', 'light wash', 'triple white', 'mixed', 'assorted'];
+                const lower = colorName.toLowerCase();
+                if (lightColors.some(c => lower.includes(c))) return '#111';
+                return '#fff';
+            }
+
+            // Cycle through colours for a product
+            function cycleColor(productIndex) {
+                const product = products[productIndex];
+                if (!product || !product.colors || product.colors.length < 2) return;
+                const newIndex = (product.colorIndex + 1) % product.colors.length;
+                product.colorIndex = newIndex;
+                // Update localStorage
+                localStorage.setItem('houseOfDripProducts', JSON.stringify(products));
+                // Re-render just that card (but simple full render is fine)
+                renderCatalogue();
+            }
+
+            // ---------- ADMIN LOGIN / UPLOAD ----------
+            adminLoginBtn.addEventListener('click', function() {
+                if (!isAdmin) {
+                    // Simulate login (in real app you'd check password)
+                    const password = prompt('Enter admin password (owner only):');
+                    if (password === 'houseofdrip' || password === 'admin123') {
+                        isAdmin = true;
+                        adminPanel.classList.add('active');
+                        adminStatusMessage.classList.remove('hidden');
+                        adminLoginBtn.innerHTML = '<i class="fas fa-check-circle"></i> Admin logged in';
+                        adminLoginBtn.style.background = '#1e4620';
+                        alert('Welcome, owner! You can now upload items.');
+                    } else if (password !== null) {
+                        alert('Wrong password. Only the owner can upload.');
+                    }
+                } else {
+                    // Log out
+                    isAdmin = false;
+                    adminPanel.classList.remove('active');
+                    adminStatusMessage.classList.add('hidden');
+                    adminLoginBtn.innerHTML = '<i class="fas fa-user-lock"></i> Admin login';
+                    adminLoginBtn.style.background = '#0f172a';
+                }
+            });
+
+            // Cancel button in admin panel
+            cancelAdminBtn.addEventListener('click', function() {
+                adminPanel.classList.remove('active');
+            });
+
+            // Upload new product
+            uploadBtn.addEventListener('click', function() {
+                if (!isAdmin) {
+                    alert('You must be logged in as admin.');
+                    return;
+                }
+
+                const name = document.getElementById('newProductName').value.trim();
+                const normalPrice = parseInt(document.getElementById('newNormalPrice').value, 10);
+                const salePrice = parseInt(document.getElementById('newSalePrice').value, 10);
+                const colorsRaw = document.getElementById('newColors').value.trim();
+
+                if (!name || isNaN(normalPrice) || isNaN(salePrice)) {
+                    alert('Please fill in product name, normal price and sale price.');
+                    return;
+                }
+
+                // Process colors
+                let colorsArray = colorsRaw.split(',').map(c => c.trim()).filter(c => c.length > 0);
+                if (colorsArray.length === 0) colorsArray = ['Default'];
+
+                // Create new product object
+                const newProduct = {
+                    name: name,
+                    normalPrice: normalPrice,
+                    salePrice: salePrice,
+                    colors: colorsArray,
+                    colorIndex: 0
+                };
+
+                // Add to products array
+                products.push(newProduct);
+
+                // Save to localStorage
+                localStorage.setItem('houseOfDripProducts', JSON.stringify(products));
+
+                // Re-render catalogue
+                renderCatalogue();
+
+                // Clear form (optional)
+                document.getElementById('newProductName').value = '';
+                document.getElementById('newNormalPrice').value = '900';
+                document.getElementById('newSalePrice').value = '800';
+                document.getElementById('newColors').value = 'Black/White, Red/Black, Blue';
+
+                alert(`"${name}" uploaded successfully! It is now live in the catalogue.`);
+            });
+
+            // Initialize: render all products
+            renderCatalogue();
+
+            // On page load, if localStorage had data we already used it; ensure any missing colorIndex reset.
+            // Also update localStorage to be safe
+            localStorage.setItem('houseOfDripProducts', JSON.stringify(products));
+
+            // Simulate that only owner can upload (our UI already does)
+            // Extra: double click on admin button to reset storage (for dev) – not needed, but leave.
+            // For safety, if there is no data, seed with base
+            if (products.length === 0) {
+                products = baseProducts.map(p => ({ ...p, colorIndex: 0 }));
+                localStorage.setItem('houseOfDripProducts', JSON.stringify(products));
+                renderCatalogue();
+            }
+        })();
+    </script>
+</body>
+</html>
