@@ -30,7 +30,7 @@ export default async (req) => {
   });
 
   return Response.json({
-    url: `/.netlify/functions/image?key=${encodeURIComponent(key)}`
+    url: `/api/image?key=${encodeURIComponent(key)}`
   });
 };
 
