@@ -380,6 +380,18 @@
 
   function adminPass() { return sessionStorage.getItem(ADMIN_PASSWORD_KEY) || ""; }
 
+  // ---------- NORMALIZE IMAGE URL ----------
+  // Old uploads stored URLs as "/.netlify/functions/image?key=..." but
+  // Netlify now serves the function at "/api/image?key=...". This converts
+  // any old URL to the new working path. Safe to call on empty strings.
+  function normalizeImgUrl(url) {
+    if (!url) return "";
+    if (url.indexOf("/.netlify/functions/image") === 0) {
+      return url.replace("/.netlify/functions/image", "/api/image");
+    }
+    return url;
+  }
+
   // ---------- LOAD PRODUCTS FROM CLOUD ----------
   async function loadProducts() {
     try {
@@ -395,9 +407,7 @@
       }
     } catch (e) { /* ignore */ }
 
-    // Cloud empty — seed with defaults and push
     products = baseProducts.map(p => ({ ...p, colorIndex: 0 }));
-    // Try to seed the cloud (only works if logged in — otherwise skip silently)
     try {
       await fetch("/api/products", {
         method: "POST",
@@ -420,7 +430,7 @@
     return res;
   }
 
-  // ---------- IMAGE HELPERS ----------
+  // ---------- COLOR HELPERS ----------
   function getColorStyle(colorName) {
     const map = {
       "black/red":"linear-gradient(135deg,#222 40%,#b22222 60%)","white/blue":"linear-gradient(135deg,#f0f0f0 40%,#1e3a8a 60%)",
@@ -457,7 +467,8 @@
 
       let styleHTML, innerHTML;
       if (v.image) {
-        styleHTML = `background-image:url('${v.image}'); background-size:cover; background-position:center;`;
+        const url = normalizeImgUrl(v.image);
+        styleHTML = `background-image:url('${url}'); background-size:cover; background-position:center;`;
         innerHTML = "";
       } else {
         styleHTML = `background:${getColorStyle(v.color)};`;
@@ -565,7 +576,7 @@
       const lineTotal = p.salePrice * item.qty;
       total += lineTotal;
       const thumbStyle = v.image
-        ? `background-image:url('${v.image}');background-size:cover;background-position:center;`
+        ? `background-image:url('${normalizeImgUrl(v.image)}');background-size:cover;background-position:center;`
         : `background:${getColorStyle(v.color)};`;
       const thumbInner = v.image ? "" : `<span style="color:${getTextColor(v.color)}">${escapeHtml(v.color.substring(0, 5))}</span>`;
 
@@ -693,7 +704,8 @@
     variantRows.innerHTML = "";
     colors.forEach((color, index) => {
       const existing = existingVariants.find(v => v.color.toLowerCase() === color.toLowerCase());
-      const imageData = existing ? existing.image : "";
+      const rawImage = existing ? existing.image : "";
+      const imageData = normalizeImgUrl(rawImage);
       const row = document.createElement("div");
       row.className = "variant-row";
       row.innerHTML = `
@@ -704,9 +716,10 @@
         </div>
       `;
       variantRows.appendChild(row);
-      if (imageData) {
+      if (rawImage) {
         const pv = row.querySelector(`#preview-${index}`);
-        pv.dataset.imageData = imageData;
+        // Store the original raw value so saving doesn't lose anything
+        pv.dataset.imageData = rawImage;
       }
     });
 
@@ -734,8 +747,10 @@
             throw new Error(errTxt || ("HTTP " + res.status));
           }
           const data = await res.json();
-          previewDiv.innerHTML = `<img src="${data.url}" alt="">`;
-          previewDiv.dataset.imageData = data.url;   // <-- store the URL, not base64
+          // New uploads may return either path; normalize just in case
+          const finalUrl = normalizeImgUrl(data.url);
+          previewDiv.innerHTML = `<img src="${finalUrl}" alt="">`;
+          previewDiv.dataset.imageData = finalUrl;
         } catch (err) {
           previewDiv.innerHTML = "failed";
           alert("Image upload failed: " + err.message);
