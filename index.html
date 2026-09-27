@@ -66,11 +66,17 @@
   .admin-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 14px; border-left: 3px solid var(--accent); padding-left: 12px; }
   .variant-uploader { background: var(--surface-3); border-radius: 16px; padding: 16px; margin: 14px 0; border: 1px dashed var(--border-strong); }
   .variant-uploader h4 { margin-bottom: 12px; font-size: 0.95rem; display:flex; align-items:center; gap: 8px; color: var(--text); }
-  .variant-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); flex-wrap: wrap; }
-  .variant-row label { font-weight: 600; min-width: 80px; color: var(--text); font-size: 0.85rem; }
-  .variant-row input[type="file"] { flex: 1; font-size: 0.8rem; color: var(--text-muted); min-width: 140px; }
-  .variant-row .preview { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); background: var(--surface-3); display:flex; align-items:center; justify-content:center; font-size: 0.6rem; color: var(--text-soft); overflow: hidden; flex-shrink: 0; }
-  .variant-row .preview img { width: 100%; height: 100%; object-fit: cover; }
+  .variant-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; padding: 12px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); }
+  .variant-row > label { font-weight: 700; color: var(--text); font-size: 0.85rem; }
+  .slot-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .slot { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; border: 1.5px dashed var(--border-strong); background: var(--surface-3); cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: 0.15s; }
+  .slot:hover { border-color: var(--header-bg); background: var(--surface-2); }
+  .slot.has-img { border-style: solid; border-color: var(--border); background-size: cover; background-position: center; }
+  .slot input[type="file"] { display: none; }
+  .slot .slot-icon { color: var(--text-soft); font-size: 0.9rem; pointer-events: none; }
+  .slot .slot-remove { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; border: none; font-size: 0.6rem; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+  .slot.has-img .slot-remove { display: flex; }
+  .slot .slot-loading { position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; }
   .catalogue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px 16px; margin-top: 18px; }
   .product-card { background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: all 0.2s; display: flex; flex-direction: column; position: relative; }
   .product-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--border-strong); }
@@ -79,7 +85,8 @@
   body.admin-mode .admin-edit-badge { display: flex; }
   .color-showcase { background: var(--surface-2); padding: 12px 10px 8px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); position: relative; gap: 6px; }
   .color-preview { display:flex; flex-direction:column; align-items:center; width: 100%; min-width: 0; }
-  .shoe-color-box { width: 100%; aspect-ratio: 1 / 0.85; border-radius: 14px; background: var(--surface-3); display:flex; align-items:center; justify-content:center; background-size: cover; background-position: center; font-size: 0.95rem; font-weight: 700; color: var(--text); overflow: hidden; text-align: center; padding: 4px; word-break: break-word; }
+  .shoe-color-box { width: 100%; aspect-ratio: 1 / 0.85; border-radius: 14px; background: var(--surface-3); display:flex; align-items:center; justify-content:center; background-size: cover; background-position: center; font-size: 0.95rem; font-weight: 700; color: var(--text); overflow: hidden; text-align: center; padding: 4px; word-break: break-word; cursor: pointer; transition: 0.15s; }
+  .shoe-color-box:hover { filter: brightness(1.03); }
   .shoe-color-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .color-label { margin-top: 6px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; background: var(--surface-3); padding: 3px 8px; border-radius: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
   .arrow-btn { background: var(--surface); border: 1px solid var(--border-strong); color: var(--text); width: 32px; height: 32px; border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size: 0.95rem; cursor: pointer; transition: 0.15s; flex-shrink: 0; z-index: 5; }
@@ -130,6 +137,29 @@
   .clear-cart-btn:hover { color: var(--accent); }
   .store-footer { margin-top: 40px; text-align: center; color: var(--text-soft); font-size: 0.82rem; border-top: 1px solid var(--border); padding-top: 20px; }
   .hidden { display: none !important; }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .lightbox.open { display: flex; animation: lbFadeIn 0.2s ease; }
+  @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb-content { position: relative; max-width: 1100px; width: 100%; max-height: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .lb-image-wrap { position: relative; display: flex; align-items: center; justify-content: center; max-height: 70vh; width: 100%; }
+  .lb-image { max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); background: #111; }
+  .lb-close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2010; backdrop-filter: blur(4px); }
+  .lb-close:hover { background: rgba(255,255,255,0.28); }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: 0.15s; }
+  .lb-nav:hover { background: rgba(255,255,255,0.32); }
+  .lb-nav:active { transform: translateY(-50%) scale(0.94); }
+  .lb-prev { left: 10px; } .lb-next { right: 10px; }
+  .lb-info { text-align: center; color: #fff; }
+  .lb-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+  .lb-color { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+  .lb-price { font-size: 1.05rem; font-weight: 700; color: #ff7a7a; }
+  .lb-thumbs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 100%; padding: 4px; }
+  .lb-thumb { width: 60px; height: 60px; border-radius: 8px; background-size: cover; background-position: center; border: 2px solid transparent; cursor: pointer; opacity: 0.55; transition: 0.15s; }
+  .lb-thumb:hover { opacity: 0.85; }
+  .lb-thumb.active { border-color: #fff; opacity: 1; }
+
   @media (max-width: 900px) {
     .store-container { padding: 16px; border-radius: 22px; }
     .catalogue-grid { grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
@@ -165,6 +195,11 @@
     .admin-panel { padding: 16px; }
     .admin-panel h3 { font-size: 1.05rem; }
     .btn-primary, .btn-secondary, .btn-danger { padding: 10px 16px; font-size: 0.82rem; }
+    .slot-grid { gap: 6px; }
+    .lb-nav { width: 38px; height: 38px; font-size: 0.95rem; }
+    .lb-close { width: 38px; height: 38px; }
+    .lb-thumb { width: 48px; height: 48px; }
+    .lb-name { font-size: 1rem; }
   }
   @media (max-width: 400px) {
     .catalogue-grid { gap: 8px 6px; }
@@ -190,6 +225,7 @@
     .product-name { font-size: 0.72rem; min-height: auto; }
     .add-cart-btn span { display: inline; }
     .cart-drawer { width: min(380px, 60vw); }
+    .lb-image { max-height: 55vh; }
   }
 </style>
 </head>
@@ -216,7 +252,7 @@
   </div>
 
   <div class="contact-strip">
-    <div class="location-pill"><i class="fas fa-map-pin"></i> Kwaluseni, Matsapha, Eswatini</div>
+    <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Kwaluseni, Matsapha, Eswatini</div>
     <div class="contact-actions">
       <a href="https://wa.me/26876037375" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i> +268 7603 7375</a>
       <a href="tel:+26876037375" class="call-btn" title="Call us"><i class="fas fa-phone-alt"></i> +268 7603 7375</a>
@@ -247,13 +283,13 @@
       <button class="btn-primary" id="uploadProductBtn"><i class="fas fa-save"></i> Save Product</button>
     </div>
     <div class="variant-uploader" id="variantUploader">
-      <h4><i class="fas fa-images"></i> Upload images for each colour</h4>
+      <h4><i class="fas fa-images"></i> Upload up to 5 images per colour</h4>
       <div id="variantRows">
         <p style="color: var(--text-soft); font-size: 0.85rem;">Type colours above to generate image uploaders.</p>
       </div>
     </div>
     <div class="admin-note">
-      <i class="fas fa-info-circle"></i> Images are uploaded to your site's cloud storage and appear for all visitors.
+      <i class="fas fa-info-circle"></i> Images are uploaded to your site's cloud storage and appear for all visitors. Click any product photo on the storefront to view it full size.
     </div>
   </div>
 
@@ -280,37 +316,56 @@
   </div>
 </aside>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lbClose" aria-label="Close"><i class="fas fa-times"></i></button>
+  <div class="lb-content">
+    <div class="lb-image-wrap">
+      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+      <img class="lb-image" id="lbImage" src="" alt="">
+      <button class="lb-nav lb-next" id="lbNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="lb-info">
+      <div class="lb-name" id="lbName"></div>
+      <div class="lb-color" id="lbColor"></div>
+      <div class="lb-price" id="lbPrice"></div>
+    </div>
+    <div class="lb-thumbs" id="lbThumbs"></div>
+  </div>
+</div>
+
 <script>
 (function () {
   const WHATSAPP_NUMBER = "26876037375";
   const ADMIN_PASSWORD_KEY = "hod-admin-pass";
+  const MAX_IMAGES_PER_VARIANT = 5;
 
   const baseProducts = [
-    { id: 1,  name: "Jordan Sneakers",     normalPrice: 900,  salePrice: 800,  variants: [{color:"Black/Red",image:""},{color:"White/Blue",image:""},{color:"Grey/Volt",image:""}], colorIndex: 0 },
-    { id: 2,  name: "Air Force 1",         normalPrice: 1200, salePrice: 1050, variants: [{color:"Triple White",image:""},{color:"Black",image:""},{color:"Shadow",image:""}], colorIndex: 0 },
-    { id: 3,  name: "Yeezy Boost 350",     normalPrice: 2500, salePrice: 2200, variants: [{color:"Zebra",image:""},{color:"Cream",image:""},{color:"Onyx",image:""}], colorIndex: 0 },
-    { id: 4,  name: "Dunk Low",            normalPrice: 1100, salePrice: 950,  variants: [{color:"Panda",image:""},{color:"Grey Fog",image:""},{color:"University Red",image:""}], colorIndex: 0 },
-    { id: 5,  name: "Air Max 97",          normalPrice: 1400, salePrice: 1250, variants: [{color:"Silver Bullet",image:""},{color:"Gold",image:""},{color:"Black",image:""}], colorIndex: 0 },
-    { id: 6,  name: "Hoodie Essentials",   normalPrice: 800,  salePrice: 650,  variants: [{color:"Oatmeal",image:""},{color:"Black",image:""},{color:"Olive",image:""}], colorIndex: 0 },
-    { id: 7,  name: "Cargo Pants",         normalPrice: 700,  salePrice: 580,  variants: [{color:"Khaki",image:""},{color:"Black",image:""},{color:"Grey",image:""}], colorIndex: 0 },
-    { id: 8,  name: "Denim Jacket",        normalPrice: 950,  salePrice: 790,  variants: [{color:"Blue",image:""},{color:"Black",image:""},{color:"Light Wash",image:""}], colorIndex: 0 },
-    { id: 9,  name: "Snapback Cap",        normalPrice: 350,  salePrice: 280,  variants: [{color:"Black",image:""},{color:"Navy",image:""},{color:"Red",image:""}], colorIndex: 0 },
-    { id: 10, name: "Crossbody Bag",       normalPrice: 550,  salePrice: 450,  variants: [{color:"Black",image:""},{color:"Tan",image:""},{color:"Green",image:""}], colorIndex: 0 },
-    { id: 11, name: "Socks (3-pack)",      normalPrice: 200,  salePrice: 150,  variants: [{color:"White",image:""},{color:"Black",image:""},{color:"Mixed",image:""}], colorIndex: 0 },
-    { id: 12, name: "Puffer Vest",         normalPrice: 1300, salePrice: 1100, variants: [{color:"Black",image:""},{color:"Red",image:""},{color:"Navy",image:""}], colorIndex: 0 },
-    { id: 13, name: "Track Pants",         normalPrice: 650,  salePrice: 520,  variants: [{color:"Grey",image:""},{color:"Black",image:""},{color:"Navy",image:""}], colorIndex: 0 },
-    { id: 14, name: "Crewneck Sweat",      normalPrice: 750,  salePrice: 620,  variants: [{color:"Heather Grey",image:""},{color:"Black",image:""},{color:"Forest",image:""}], colorIndex: 0 },
-    { id: 15, name: "Belt Bag",            normalPrice: 450,  salePrice: 380,  variants: [{color:"Black",image:""},{color:"Camo",image:""},{color:"Tan",image:""}], colorIndex: 0 },
-    { id: 16, name: "Beanie",              normalPrice: 250,  salePrice: 190,  variants: [{color:"Black",image:""},{color:"Grey",image:""},{color:"Burgundy",image:""}], colorIndex: 0 },
-    { id: 17, name: "Windbreaker",         normalPrice: 980,  salePrice: 820,  variants: [{color:"Neon",image:""},{color:"Black",image:""},{color:"Royal Blue",image:""}], colorIndex: 0 },
-    { id: 18, name: "Graphic Tee",         normalPrice: 400,  salePrice: 320,  variants: [{color:"White",image:""},{color:"Black",image:""},{color:"Sand",image:""}], colorIndex: 0 },
-    { id: 19, name: "Shorts",              normalPrice: 480,  salePrice: 390,  variants: [{color:"Black",image:""},{color:"Navy",image:""},{color:"Olive",image:""}], colorIndex: 0 },
-    { id: 20, name: "Sunglasses",          normalPrice: 600,  salePrice: 480,  variants: [{color:"Black",image:""},{color:"Tortoise",image:""},{color:"Silver",image:""}], colorIndex: 0 },
-    { id: 21, name: "Chain Necklace",      normalPrice: 700,  salePrice: 560,  variants: [{color:"Gold",image:""},{color:"Silver",image:""},{color:"Rose Gold",image:""}], colorIndex: 0 },
-    { id: 22, name: "Backpack",            normalPrice: 850,  salePrice: 720,  variants: [{color:"Black",image:""},{color:"Grey",image:""},{color:"Navy",image:""}], colorIndex: 0 },
-    { id: 23, name: "Slides",              normalPrice: 350,  salePrice: 280,  variants: [{color:"Black",image:""},{color:"White",image:""},{color:"Red",image:""}], colorIndex: 0 },
-    { id: 24, name: "Hooded Jacket",       normalPrice: 1100, salePrice: 920,  variants: [{color:"Black",image:""},{color:"Olive",image:""},{color:"Grey",image:""}], colorIndex: 0 },
-    { id: 25, name: "Crew Socks (5-pack)", normalPrice: 300,  salePrice: 240,  variants: [{color:"White",image:""},{color:"Black",image:""},{color:"Assorted",image:""}], colorIndex: 0 }
+    { id: 1,  name: "Jordan Sneakers",     normalPrice: 900,  salePrice: 800,  variants: [{color:"Black/Red",image:"",images:[]},{color:"White/Blue",image:"",images:[]},{color:"Grey/Volt",image:"",images:[]}], colorIndex: 0 },
+    { id: 2,  name: "Air Force 1",         normalPrice: 1200, salePrice: 1050, variants: [{color:"Triple White",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Shadow",image:"",images:[]}], colorIndex: 0 },
+    { id: 3,  name: "Yeezy Boost 350",     normalPrice: 2500, salePrice: 2200, variants: [{color:"Zebra",image:"",images:[]},{color:"Cream",image:"",images:[]},{color:"Onyx",image:"",images:[]}], colorIndex: 0 },
+    { id: 4,  name: "Dunk Low",            normalPrice: 1100, salePrice: 950,  variants: [{color:"Panda",image:"",images:[]},{color:"Grey Fog",image:"",images:[]},{color:"University Red",image:"",images:[]}], colorIndex: 0 },
+    { id: 5,  name: "Air Max 97",          normalPrice: 1400, salePrice: 1250, variants: [{color:"Silver Bullet",image:"",images:[]},{color:"Gold",image:"",images:[]},{color:"Black",image:"",images:[]}], colorIndex: 0 },
+    { id: 6,  name: "Hoodie Essentials",   normalPrice: 800,  salePrice: 650,  variants: [{color:"Oatmeal",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Olive",image:"",images:[]}], colorIndex: 0 },
+    { id: 7,  name: "Cargo Pants",         normalPrice: 700,  salePrice: 580,  variants: [{color:"Khaki",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Grey",image:"",images:[]}], colorIndex: 0 },
+    { id: 8,  name: "Denim Jacket",        normalPrice: 950,  salePrice: 790,  variants: [{color:"Blue",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Light Wash",image:"",images:[]}], colorIndex: 0 },
+    { id: 9,  name: "Snapback Cap",        normalPrice: 350,  salePrice: 280,  variants: [{color:"Black",image:"",images:[]},{color:"Navy",image:"",images:[]},{color:"Red",image:"",images:[]}], colorIndex: 0 },
+    { id: 10, name: "Crossbody Bag",       normalPrice: 550,  salePrice: 450,  variants: [{color:"Black",image:"",images:[]},{color:"Tan",image:"",images:[]},{color:"Green",image:"",images:[]}], colorIndex: 0 },
+    { id: 11, name: "Socks (3-pack)",      normalPrice: 200,  salePrice: 150,  variants: [{color:"White",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Mixed",image:"",images:[]}], colorIndex: 0 },
+    { id: 12, name: "Puffer Vest",         normalPrice: 1300, salePrice: 1100, variants: [{color:"Black",image:"",images:[]},{color:"Red",image:"",images:[]},{color:"Navy",image:"",images:[]}], colorIndex: 0 },
+    { id: 13, name: "Track Pants",         normalPrice: 650,  salePrice: 520,  variants: [{color:"Grey",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Navy",image:"",images:[]}], colorIndex: 0 },
+    { id: 14, name: "Crewneck Sweat",      normalPrice: 750,  salePrice: 620,  variants: [{color:"Heather Grey",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Forest",image:"",images:[]}], colorIndex: 0 },
+    { id: 15, name: "Belt Bag",            normalPrice: 450,  salePrice: 380,  variants: [{color:"Black",image:"",images:[]},{color:"Camo",image:"",images:[]},{color:"Tan",image:"",images:[]}], colorIndex: 0 },
+    { id: 16, name: "Beanie",              normalPrice: 250,  salePrice: 190,  variants: [{color:"Black",image:"",images:[]},{color:"Grey",image:"",images:[]},{color:"Burgundy",image:"",images:[]}], colorIndex: 0 },
+    { id: 17, name: "Windbreaker",         normalPrice: 980,  salePrice: 820,  variants: [{color:"Neon",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Royal Blue",image:"",images:[]}], colorIndex: 0 },
+    { id: 18, name: "Graphic Tee",         normalPrice: 400,  salePrice: 320,  variants: [{color:"White",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Sand",image:"",images:[]}], colorIndex: 0 },
+    { id: 19, name: "Shorts",              normalPrice: 480,  salePrice: 390,  variants: [{color:"Black",image:"",images:[]},{color:"Navy",image:"",images:[]},{color:"Olive",image:"",images:[]}], colorIndex: 0 },
+    { id: 20, name: "Sunglasses",          normalPrice: 600,  salePrice: 480,  variants: [{color:"Black",image:"",images:[]},{color:"Tortoise",image:"",images:[]},{color:"Silver",image:"",images:[]}], colorIndex: 0 },
+    { id: 21, name: "Chain Necklace",      normalPrice: 700,  salePrice: 560,  variants: [{color:"Gold",image:"",images:[]},{color:"Silver",image:"",images:[]},{color:"Rose Gold",image:"",images:[]}], colorIndex: 0 },
+    { id: 22, name: "Backpack",            normalPrice: 850,  salePrice: 720,  variants: [{color:"Black",image:"",images:[]},{color:"Grey",image:"",images:[]},{color:"Navy",image:"",images:[]}], colorIndex: 0 },
+    { id: 23, name: "Slides",              normalPrice: 350,  salePrice: 280,  variants: [{color:"Black",image:"",images:[]},{color:"White",image:"",images:[]},{color:"Red",image:"",images:[]}], colorIndex: 0 },
+    { id: 24, name: "Hooded Jacket",       normalPrice: 1100, salePrice: 920,  variants: [{color:"Black",image:"",images:[]},{color:"Olive",image:"",images:[]},{color:"Grey",image:"",images:[]}], colorIndex: 0 },
+    { id: 25, name: "Crew Socks (5-pack)", normalPrice: 300,  salePrice: 240,  variants: [{color:"White",image:"",images:[]},{color:"Black",image:"",images:[]},{color:"Assorted",image:"",images:[]}], colorIndex: 0 }
   ];
 
   let products = [];
@@ -327,6 +382,12 @@
 
   let editingProductId = null;
 
+  // Lightbox state
+  let lbProductId = null;
+  let lbVariantIndex = 0;
+  let lbImageIndex = 0;
+
+  // ---------- THEME ----------
   function applyTheme(dark) {
     document.body.classList.toggle("dark", dark);
     const icon = document.querySelector("#darkToggle i");
@@ -338,7 +399,7 @@
     applyTheme(!document.body.classList.contains("dark"));
   });
 
-  // ---------- ADMIN AUTH (verifies against server) ----------
+  // ---------- ADMIN AUTH ----------
   async function verifyAdminPassword(pass) {
     try {
       const res = await fetch("/api/products", {
@@ -347,9 +408,7 @@
         body: JSON.stringify({ products: null })
       });
       return res.status !== 401;
-    } catch (e) {
-      return false;
-    }
+    } catch (e) { return false; }
   }
 
   adminLoginBtn.addEventListener("click", async function () {
@@ -380,10 +439,7 @@
 
   function adminPass() { return sessionStorage.getItem(ADMIN_PASSWORD_KEY) || ""; }
 
-  // ---------- NORMALIZE IMAGE URL ----------
-  // Old uploads stored URLs as "/.netlify/functions/image?key=..." but
-  // Netlify now serves the function at "/api/image?key=...". This converts
-  // any old URL to the new working path. Safe to call on empty strings.
+  // ---------- URL NORMALIZE ----------
   function normalizeImgUrl(url) {
     if (!url) return "";
     if (url.indexOf("/.netlify/functions/image") === 0) {
@@ -392,14 +448,29 @@
     return url;
   }
 
-  // ---------- LOAD PRODUCTS FROM CLOUD ----------
+  // ---------- NORMALIZE PRODUCT SHAPE ----------
+  function normalizeProduct(p) {
+    const variants = (p.variants || [{ color: "Default", image: "" }]).map(v => {
+      let imgs = Array.isArray(v.images) ? v.images.slice() : [];
+      if (imgs.length === 0 && v.image) imgs = [v.image];
+      imgs = imgs.filter(Boolean);
+      return {
+        color: v.color || "Default",
+        image: imgs[0] || "",
+        images: imgs
+      };
+    });
+    return { ...p, variants, colorIndex: p.colorIndex || 0 };
+  }
+
+  // ---------- LOAD PRODUCTS ----------
   async function loadProducts() {
     try {
       const res = await fetch("/api/products");
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
-          products = data;
+          products = data.map(normalizeProduct);
           renderCatalogue();
           populateProductSelect();
           return;
@@ -407,7 +478,7 @@
       }
     } catch (e) { /* ignore */ }
 
-    products = baseProducts.map(p => ({ ...p, colorIndex: 0 }));
+    products = baseProducts.map(normalizeProduct);
     try {
       await fetch("/api/products", {
         method: "POST",
@@ -461,7 +532,7 @@
   function renderCatalogue() {
     grid.innerHTML = "";
     products.forEach((product, index) => {
-      const variants = product.variants || [{ color: "Default", image: "" }];
+      const variants = product.variants || [{ color: "Default", image: "", images: [] }];
       const ci = (product.colorIndex || 0) % variants.length;
       const v = variants[ci];
 
@@ -482,7 +553,7 @@
         <div class="admin-edit-badge" data-id="${product.id}" title="Edit"><i class="fas fa-pen"></i></div>
         <div class="color-showcase">
           <div class="color-preview">
-            <div class="shoe-color-box" style="${styleHTML}">${innerHTML}</div>
+            <div class="shoe-color-box" style="${styleHTML}" data-product-id="${product.id}" data-variant-index="${ci}">${innerHTML}</div>
             <div class="color-label">${variants.length > 1 ? `colour ${ci + 1}/${variants.length}` : "only colour"}</div>
           </div>
           <button class="arrow-btn" data-index="${index}" title="Next colour"><i class="fas fa-chevron-right"></i></button>
@@ -525,6 +596,14 @@
         editProduct(parseInt(b.dataset.id, 10));
       });
     });
+    grid.querySelectorAll(".shoe-color-box").forEach(box => {
+      box.addEventListener("click", e => {
+        e.stopPropagation();
+        const pid = parseInt(box.dataset.productId, 10);
+        const vi = parseInt(box.dataset.variantIndex, 10);
+        openLightbox(pid, vi);
+      });
+    });
   }
 
   function cycleColor(productIndex) {
@@ -533,6 +612,84 @@
     p.colorIndex = ((p.colorIndex || 0) + 1) % p.variants.length;
     renderCatalogue();
   }
+
+  // ---------- LIGHTBOX ----------
+  const lightbox = document.getElementById("lightbox");
+  const lbImage = document.getElementById("lbImage");
+  const lbName = document.getElementById("lbName");
+  const lbColor = document.getElementById("lbColor");
+  const lbPrice = document.getElementById("lbPrice");
+  const lbThumbs = document.getElementById("lbThumbs");
+  const lbPrev = document.getElementById("lbPrev");
+  const lbNext = document.getElementById("lbNext");
+
+  function openLightbox(productId, variantIndex) {
+    const p = products.find(x => x.id === productId);
+    if (!p) return;
+    const v = p.variants[variantIndex];
+    if (!v || !v.images || v.images.length === 0) return;
+    lbProductId = productId;
+    lbVariantIndex = variantIndex;
+    lbImageIndex = 0;
+    updateLightbox();
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    document.body.style.overflow = "";
+    lbProductId = null;
+  }
+
+  function updateLightbox() {
+    const p = products.find(x => x.id === lbProductId);
+    if (!p) return;
+    const v = p.variants[lbVariantIndex];
+    if (!v || !v.images.length) { closeLightbox(); return; }
+
+    const url = normalizeImgUrl(v.images[lbImageIndex]);
+    lbImage.src = url;
+    lbName.textContent = p.name;
+    lbColor.textContent = v.color + "  ·  " + (lbImageIndex + 1) + " / " + v.images.length;
+    lbPrice.textContent = "E" + p.salePrice;
+
+    lbThumbs.innerHTML = "";
+    v.images.forEach((img, i) => {
+      const t = document.createElement("div");
+      t.className = "lb-thumb" + (i === lbImageIndex ? " active" : "");
+      t.style.backgroundImage = `url('${normalizeImgUrl(img)}')`;
+      t.addEventListener("click", () => { lbImageIndex = i; updateLightbox(); });
+      lbThumbs.appendChild(t);
+    });
+
+    const multi = v.images.length > 1;
+    lbPrev.style.display = multi ? "" : "none";
+    lbNext.style.display = multi ? "" : "none";
+  }
+
+  lbPrev.addEventListener("click", e => {
+    e.stopPropagation();
+    const p = products.find(x => x.id === lbProductId);
+    const v = p.variants[lbVariantIndex];
+    lbImageIndex = (lbImageIndex - 1 + v.images.length) % v.images.length;
+    updateLightbox();
+  });
+  lbNext.addEventListener("click", e => {
+    e.stopPropagation();
+    const p = products.find(x => x.id === lbProductId);
+    const v = p.variants[lbVariantIndex];
+    lbImageIndex = (lbImageIndex + 1) % v.images.length;
+    updateLightbox();
+  });
+  document.getElementById("lbClose").addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener("keydown", e => {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") closeLightbox();
+    else if (e.key === "ArrowLeft" && lbPrev.style.display !== "none") lbPrev.click();
+    else if (e.key === "ArrowRight" && lbNext.style.display !== "none") lbNext.click();
+  });
 
   // ---------- CART ----------
   function addToCart(productIndex) {
@@ -552,7 +709,6 @@
     const count = cart.reduce((a, c) => a + c.qty, 0);
     document.getElementById("cartBadge").textContent = count;
   }
-
   function pulseCartBadge() {
     const b = document.getElementById("cartToggle");
     b.style.transform = "scale(1.15)";
@@ -645,11 +801,10 @@
       `Name: ${name}\n` +
       `Phone: ${phone}\n\n` +
       `Please confirm my order. Thank you!`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   });
 
-  // ---------- ADMIN ----------
+  // ---------- ADMIN: SELECT ----------
   function populateProductSelect() {
     productSelect.innerHTML = '<option value="new">+ Add New Product</option>';
     products.forEach(p => {
@@ -669,7 +824,7 @@
       document.getElementById("newNormalPrice").value = "900";
       document.getElementById("newSalePrice").value = "800";
       colorsInput.value = "Black/White, Red/Black, Blue";
-      generateVariantUploaders(colorsInput.value);
+      generateVariantUploaders(colorsInput.value, []);
     } else {
       const p = products.find(x => x.id == val);
       if (!p) return;
@@ -694,46 +849,82 @@
     return p ? p.variants : [];
   }
 
+  // ---------- ADMIN: MULTI-IMAGE UPLOADERS ----------
   function generateVariantUploaders(colorsStr, existingVariants) {
-    existingVariants = existingVariants || currentEditingVariants();
+    existingVariants = existingVariants || [];
     const colors = colorsStr.split(",").map(c => c.trim()).filter(c => c.length);
     if (colors.length === 0) {
       variantRows.innerHTML = `<p style="color:var(--text-soft); font-size:0.85rem;">Type colours above to generate image uploaders.</p>`;
       return;
     }
+
     variantRows.innerHTML = "";
-    colors.forEach((color, index) => {
+    colors.forEach((color, colorIndex) => {
       const existing = existingVariants.find(v => v.color.toLowerCase() === color.toLowerCase());
-      const rawImage = existing ? existing.image : "";
-      const imageData = normalizeImgUrl(rawImage);
+      let existingImages = [];
+      if (existing) {
+        if (Array.isArray(existing.images)) existingImages = existing.images.slice();
+        else if (existing.image) existingImages = [existing.image];
+      }
+
       const row = document.createElement("div");
       row.className = "variant-row";
-      row.innerHTML = `
-        <label>${escapeHtml(color)}</label>
-        <input type="file" accept="image/*" data-color="${escapeHtml(color)}" data-index="${index}">
-        <div class="preview" id="preview-${index}">
-          ${imageData ? `<img src="${imageData}" alt="">` : "no image"}
-        </div>
-      `;
-      variantRows.appendChild(row);
-      if (rawImage) {
-        const pv = row.querySelector(`#preview-${index}`);
-        // Store the original raw value so saving doesn't lose anything
-        pv.dataset.imageData = rawImage;
+      row.innerHTML = `<label>${escapeHtml(color)} <span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">— up to ${MAX_IMAGES_PER_VARIANT} images</span></label>`;
+
+      const slotGrid = document.createElement("div");
+      slotGrid.className = "slot-grid";
+
+      for (let s = 0; s < MAX_IMAGES_PER_VARIANT; s++) {
+        const url = existingImages[s] || "";
+        const slot = document.createElement("label");
+        slot.className = "slot" + (url ? " has-img" : "");
+        slot.dataset.color = color;
+        slot.dataset.slotIndex = s;
+        if (url) {
+          slot.dataset.image = url;
+          slot.style.backgroundImage = `url('${normalizeImgUrl(url)}')`;
+        }
+        slot.innerHTML = `
+          <input type="file" accept="image/*">
+          ${url ? '' : '<i class="fas fa-plus slot-icon"></i>'}
+          ${url ? '<button type="button" class="slot-remove" title="Remove"><i class="fas fa-times"></i></button>' : ''}
+        `;
+        slotGrid.appendChild(slot);
       }
+
+      row.appendChild(slotGrid);
+      variantRows.appendChild(row);
     });
 
-    variantRows.querySelectorAll('input[type="file"]').forEach(input => {
-      input.addEventListener("change", async function (e) {
+    // Attach slot handlers
+    variantRows.querySelectorAll(".slot").forEach(slot => {
+      const fileInput = slot.querySelector('input[type="file"]');
+      const removeBtn = slot.querySelector(".slot-remove");
+
+      slot.addEventListener("click", (e) => {
+        if (e.target.closest(".slot-remove")) return;
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", async function (e) {
         const file = e.target.files[0];
         if (!file) return;
-        const color = this.dataset.color;
-        const idx = this.dataset.index;
-        const previewDiv = document.getElementById(`preview-${idx}`);
-        previewDiv.innerHTML = "uploading…";
+        const color = slot.dataset.color;
+        const slotIdx = slot.dataset.slotIndex;
+
+        // Show loading overlay
+        let loading = slot.querySelector(".slot-loading");
+        if (!loading) {
+          loading = document.createElement("div");
+          loading.className = "slot-loading";
+          loading.textContent = "…";
+          slot.appendChild(loading);
+        } else {
+          loading.textContent = "…";
+        }
 
         try {
-          const key = `p${editingProductId || "new"}-${color.replace(/\W+/g, "-").toLowerCase()}-${Date.now()}.jpg`;
+          const key = `p${editingProductId || "new"}-${color.replace(/\W+/g, "-").toLowerCase()}-s${slotIdx}-${Date.now()}.jpg`;
           const fd = new FormData();
           fd.append("image", file);
           fd.append("key", key);
@@ -742,24 +933,83 @@
             headers: { "x-admin-password": adminPass() },
             body: fd
           });
-          if (!res.ok) {
-            const errTxt = await res.text();
-            throw new Error(errTxt || ("HTTP " + res.status));
-          }
+          if (!res.ok) throw new Error(await res.text() || ("HTTP " + res.status));
           const data = await res.json();
-          // New uploads may return either path; normalize just in case
           const finalUrl = normalizeImgUrl(data.url);
-          previewDiv.innerHTML = `<img src="${finalUrl}" alt="">`;
-          previewDiv.dataset.imageData = finalUrl;
+
+          // Update slot
+          slot.dataset.image = finalUrl;
+          slot.classList.add("has-img");
+          slot.style.backgroundImage = `url('${finalUrl}')`;
+          // Remove icon
+          const icon = slot.querySelector(".slot-icon");
+          if (icon) icon.remove();
+          // Add remove button
+          if (!slot.querySelector(".slot-remove")) {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "slot-remove";
+            btn.title = "Remove";
+            btn.innerHTML = '<i class="fas fa-times"></i>';
+            slot.appendChild(btn);
+            btn.addEventListener("click", (ev) => {
+              ev.stopPropagation();
+              clearSlot(slot);
+            });
+          }
+          // Remove loading
+          if (loading) loading.remove();
         } catch (err) {
-          previewDiv.innerHTML = "failed";
-          alert("Image upload failed: " + err.message);
+          if (loading) loading.remove();
+          alert("Upload failed: " + err.message);
         }
+        fileInput.value = "";
       });
+
+      if (removeBtn) {
+        removeBtn.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          clearSlot(slot);
+        });
+      }
     });
+
+    function clearSlot(slot) {
+      slot.dataset.image = "";
+      slot.style.backgroundImage = "";
+      slot.classList.remove("has-img");
+      slot.innerHTML = '<input type="file" accept="image/*"><i class="fas fa-plus slot-icon"></i>';
+      // Reattach listeners
+      const fi = slot.querySelector('input[type="file"]');
+      fi.addEventListener("change", async function (e) {
+        // Same handler as above — reuse by triggering change
+        slot.dispatchEvent(new Event("__rebuild"));
+      });
+      // Simpler: rebuild the whole uploader
+      generateVariantUploaders(colorsInput.value, collectCurrentImages());
+    }
   }
 
-  // ---------- SAVE PRODUCT ----------
+  function collectCurrentImages() {
+    // Read current variant images from the DOM so we can re-render without losing data
+    const colors = colorsInput.value.split(",").map(c => c.trim()).filter(c => c.length);
+    const variants = [];
+    colors.forEach(color => {
+      const slots = variantRows.querySelectorAll(`.slot[data-color="${cssEscape(color)}"]`);
+      const images = [];
+      slots.forEach(slot => {
+        if (slot.dataset.image) images.push(slot.dataset.image);
+      });
+      variants.push({ color, image: images[0] || "", images });
+    });
+    return variants;
+  }
+
+  function cssEscape(s) {
+    return String(s).replace(/["\\]/g, "\\$&");
+  }
+
+  // ---------- ADMIN: SAVE ----------
   document.getElementById("uploadProductBtn").addEventListener("click", async function () {
     if (!isAdmin) { alert("Log in as admin first."); return; }
     const name = document.getElementById("newProductName").value.trim();
@@ -774,9 +1024,17 @@
     const colors = colorsRaw.split(",").map(c => c.trim()).filter(c => c.length);
     if (colors.length === 0) { alert("Please enter at least one colour."); return; }
 
-    const variants = colors.map((color, i) => {
-      const pv = document.getElementById(`preview-${i}`);
-      return { color, image: pv?.dataset.imageData || "" };
+    const variants = colors.map(color => {
+      const slots = variantRows.querySelectorAll(`.slot[data-color="${cssEscape(color)}"]`);
+      const images = [];
+      slots.forEach(slot => {
+        if (slot.dataset.image) images.push(slot.dataset.image);
+      });
+      return {
+        color,
+        image: images[0] || "",
+        images
+      };
     });
 
     if (editingProductId) {
@@ -799,7 +1057,7 @@
     }
   });
 
-  // ---------- DELETE PRODUCT ----------
+  // ---------- ADMIN: DELETE ----------
   deleteBtn.addEventListener("click", async function () {
     if (!editingProductId) return;
     if (!confirm("Delete this product?")) return;
@@ -825,7 +1083,7 @@
   saveCart();
   renderCart();
   loadProducts();
-  generateVariantUploaders(colorsInput.value);
+  generateVariantUploaders(colorsInput.value, []);
 })();
 </script>
 </body>
