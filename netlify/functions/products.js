@@ -5,25 +5,31 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 export default async (req) => {
   const store = getStore("house-of-drip-data");
 
-  // PUBLIC: anyone can read the catalogue
   if (req.method === "GET") {
     const products = (await store.get("products", { type: "json" })) || [];
-    return Response.json(products, {
-      headers: { "cache-control": "public, max-age=60" }
+    const settings = (await store.get("settings", { type: "json" })) || { logo: "", saleText: "" };
+    
+    return Response.json({ products, settings }, {
+      headers: { "cache-control": "public, max-age=30" }
     });
   }
 
-  // ADMIN ONLY: save the catalogue
   if (req.method === "POST") {
     const auth = req.headers.get("x-admin-password");
     if (!auth || auth !== ADMIN_PASSWORD) {
       return new Response("Unauthorized", { status: 401 });
     }
-    const { products } = await req.json();
-    if (!Array.isArray(products)) {
-      return new Response("Invalid payload", { status: 400 });
+    
+    const body = await req.json();
+    
+    // Backward compatibility for old payloads
+    if (Array.isArray(body)) {
+      await store.setJSON("products", body);
+    } else {
+      if (body.products) await store.setJSON("products", body.products);
+      if (body.settings) await store.setJSON("settings", body.settings);
     }
-    await store.setJSON("products", products);
+    
     return Response.json({ ok: true });
   }
 
