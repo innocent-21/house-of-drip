@@ -32,13 +32,14 @@
   .store-container { max-width: 1400px; margin: 0 auto; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; padding: 22px 22px 20px; transition: background 0.25s; }
   .store-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 2px solid var(--border); }
   .logo-area { display:flex; align-items:center; gap:12px; }
-  .logo-icon { font-size: 1.9rem; background: var(--header-bg); color:#fff; width: 52px; height:52px; display:flex; align-items:center; justify-content:center; border-radius: 16px; box-shadow: var(--shadow-md); }
+  .logo-icon { font-size: 1.9rem; background: var(--header-bg); color:#fff; width: 52px; height:52px; display:flex; align-items:center; justify-content:center; border-radius: 16px; box-shadow: var(--shadow-md); background-size: cover; background-position: center; }
   .logo-text h1 { font-size: 1.6rem; font-weight: 800; letter-spacing:-0.5px; line-height:1.05; color: var(--text); }
   .logo-text p { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.3px; }
   .header-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .icon-btn { background: var(--surface-3); border: 1px solid var(--border); color: var(--text); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; cursor: pointer; transition: 0.2s; position: relative; }
   .icon-btn:hover { background: var(--header-bg); color: #fff; border-color: var(--header-bg); }
   .icon-btn .badge { position: absolute; top: -4px; right: -4px; background: var(--accent); color:#fff; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--surface); }
+  
   .contact-strip { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; align-items: center; justify-content: space-between; }
   .location-pill { display:flex; align-items:center; gap:8px; font-size: 0.85rem; font-weight:500; color: var(--text-muted); background: var(--surface-3); padding: 8px 14px; border-radius: 40px; border: 1px solid var(--border); }
   .location-pill i { color: var(--accent); }
@@ -48,6 +49,23 @@
   .contact-actions a i { font-size: 1.1rem; }
   .whatsapp-btn i { color: var(--wa); } .contact-actions a:hover .whatsapp-btn i { color:#fff; }
   .call-btn i { color: var(--call); } .contact-actions a:hover .call-btn i { color:#fff; }
+
+  /* SALE BANNER */
+  .sale-banner {
+    background: linear-gradient(135deg, var(--accent), #ff8a8a);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-sm);
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .sale-banner.hidden { display: none; }
+
   .admin-panel { background: var(--surface); border-radius: var(--radius); padding: 22px; margin: 16px 0; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; }
   .admin-panel.active { display: block; }
   .admin-panel h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; color: var(--text); display:flex; align-items:center; gap: 10px; }
@@ -64,6 +82,7 @@
   .btn-danger { background: #fee2e2; color: #b91c1c; }
   .btn-danger:hover { background: #fecaca; }
   .admin-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 14px; border-left: 3px solid var(--accent); padding-left: 12px; }
+  
   .variant-uploader { background: var(--surface-3); border-radius: 16px; padding: 16px; margin: 14px 0; border: 1px dashed var(--border-strong); }
   .variant-uploader h4 { margin-bottom: 12px; font-size: 0.95rem; display:flex; align-items:center; gap: 8px; color: var(--text); }
   .variant-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; padding: 12px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); }
@@ -77,6 +96,7 @@
   .slot .slot-remove { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; border: none; font-size: 0.6rem; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
   .slot.has-img .slot-remove { display: flex; }
   .slot .slot-loading { position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; }
+
   .catalogue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 22px 16px; margin-top: 18px; }
   .product-card { background: var(--surface); border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: all 0.2s; display: flex; flex-direction: column; position: relative; }
   .product-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--border-strong); }
@@ -101,6 +121,7 @@
   .add-cart-btn:hover { background: var(--accent); }
   .add-cart-btn:active { transform: scale(0.97); }
   .add-cart-btn.added { background: var(--wa); color: #fff; }
+  
   .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity 0.25s; z-index: 999; }
   .cart-overlay.open { opacity: 1; pointer-events: auto; }
   .cart-drawer { position: fixed; top: 0; right: 0; height: 100dvh; width: min(420px, 92vw); background: var(--surface); box-shadow: -20px 0 40px rgba(0,0,0,0.25); transform: translateX(105%); transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1); z-index: 1000; display: flex; flex-direction: column; color: var(--text); }
@@ -138,7 +159,7 @@
   .store-footer { margin-top: 40px; text-align: center; color: var(--text-soft); font-size: 0.82rem; border-top: 1px solid var(--border); padding-top: 20px; }
   .hidden { display: none !important; }
 
-  /* ---------- LIGHTBOX ---------- */
+  /* LIGHTBOX */
   .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
   .lightbox.open { display: flex; animation: lbFadeIn 0.2s ease; }
   @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -179,6 +200,7 @@
     .icon-btn { width: 40px; height: 40px; font-size: 0.95rem; }
     .contact-actions a { font-size: 0.78rem; padding: 8px 12px; }
     .contact-actions a i { font-size: 1rem; }
+    .sale-banner { font-size: 0.9rem; padding: 10px; margin-bottom: 14px; }
     .catalogue-grid { grid-template-columns: repeat(3, 1fr); gap: 10px 8px; margin-top: 12px; }
     .color-showcase { padding: 8px 6px 6px; gap: 4px; }
     .shoe-color-box { border-radius: 10px; font-size: 0.72rem; }
@@ -235,7 +257,7 @@
 
   <div class="store-header">
     <div class="logo-area">
-      <div class="logo-icon"><i class="fas fa-shoe-prints"></i></div>
+      <div class="logo-icon" id="siteLogo"><i class="fas fa-shoe-prints"></i></div>
       <div class="logo-text">
         <h1>House of Drip</h1>
         <p>sneakers · streetwear · exclusive</p>
@@ -259,8 +281,29 @@
     </div>
   </div>
 
+  <!-- SALE BANNER -->
+  <div class="sale-banner hidden" id="saleBanner"></div>
+
   <div class="admin-panel" id="adminPanel">
-    <h3><i class="fas fa-cloud-upload-alt"></i> Manage Products</h3>
+    <h3><i class="fas fa-cloud-upload-alt"></i> Manage Products & Settings</h3>
+    
+    <!-- SITE SETTINGS -->
+    <div class="admin-form-row" style="background: var(--surface-3); padding: 16px; border-radius: 16px; margin-bottom: 24px; border: 1px dashed var(--border-strong);">
+      <div class="form-group" style="flex: 0 0 60px;">
+        <label>Logo</label>
+        <div id="logoPreview" style="width: 44px; height: 44px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; background-size: cover; background-position: center;">
+          <i class="fas fa-image" style="color: var(--text-soft);"></i>
+        </div>
+        <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+        <button type="button" class="btn-secondary" onclick="document.getElementById('logoUpload').click()" style="padding: 4px 8px; font-size: 0.7rem; margin-top: 6px; width: 100%; justify-content: center;">Upload</button>
+      </div>
+      <div class="form-group" style="flex: 2;">
+        <label>Sale Banner Text (e.g. November Sales)</label>
+        <input type="text" id="saleTextInput" placeholder="November Sales — Up to 50% off!">
+      </div>
+      <button class="btn-primary" id="saveSettingsBtn" style="height: 42px;"><i class="fas fa-save"></i> Save Settings</button>
+    </div>
+
     <div class="admin-form-row">
       <div class="form-group">
         <label>Select product to edit</label>
@@ -270,11 +313,13 @@
       </div>
       <button class="btn-danger hidden" id="deleteProductBtn"><i class="fas fa-trash"></i> Delete</button>
     </div>
+    
     <div class="admin-form-row">
       <div class="form-group"><label>Product name</label><input type="text" id="newProductName" placeholder="e.g. Air Max 90"></div>
       <div class="form-group"><label>Normal price (E)</label><input type="number" id="newNormalPrice" placeholder="900" value="900"></div>
       <div class="form-group"><label>Sale price (E)</label><input type="number" id="newSalePrice" placeholder="800" value="800"></div>
     </div>
+    
     <div class="admin-form-row">
       <div class="form-group" style="flex: 2 1 260px;">
         <label>Colours (comma separated)</label>
@@ -282,12 +327,14 @@
       </div>
       <button class="btn-primary" id="uploadProductBtn"><i class="fas fa-save"></i> Save Product</button>
     </div>
+
     <div class="variant-uploader" id="variantUploader">
       <h4><i class="fas fa-images"></i> Upload up to 5 images per colour</h4>
       <div id="variantRows">
         <p style="color: var(--text-soft); font-size: 0.85rem;">Type colours above to generate image uploaders.</p>
       </div>
     </div>
+    
     <div class="admin-note">
       <i class="fas fa-info-circle"></i> Images are uploaded to your site's cloud storage and appear for all visitors. Click any product photo on the storefront to view it full size.
     </div>
@@ -316,7 +363,6 @@
   </div>
 </aside>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <button class="lb-close" id="lbClose" aria-label="Close"><i class="fas fa-times"></i></button>
   <div class="lb-content">
@@ -369,6 +415,7 @@
   ];
 
   let products = [];
+  let settings = { logo: "", saleText: "" };
   let cart = JSON.parse(localStorage.getItem("hod-cart") || "[]");
   let isAdmin = false;
 
@@ -381,8 +428,6 @@
   const variantRows = document.getElementById("variantRows");
 
   let editingProductId = null;
-
-  // Lightbox state
   let lbProductId = null;
   let lbVariantIndex = 0;
   let lbImageIndex = 0;
@@ -424,6 +469,18 @@
       adminLoginBtn.innerHTML = '<i class="fas fa-check-circle"></i>';
       adminLoginBtn.style.background = "#1e4620";
       adminLoginBtn.style.color = "#fff";
+      
+      // Populate settings form
+      document.getElementById("saleTextInput").value = settings.saleText || "";
+      const preview = document.getElementById("logoPreview");
+      if (settings.logo) {
+        preview.innerHTML = "";
+        preview.style.backgroundImage = `url('${normalizeImgUrl(settings.logo)}')`;
+      } else {
+        preview.innerHTML = '<i class="fas fa-image" style="color: var(--text-soft);"></i>';
+        preview.style.backgroundImage = "";
+      }
+
       populateProductSelect();
       adminPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
@@ -439,7 +496,7 @@
 
   function adminPass() { return sessionStorage.getItem(ADMIN_PASSWORD_KEY) || ""; }
 
-  // ---------- URL NORMALIZE ----------
+  // ---------- URL & PRODUCT NORMALIZE ----------
   function normalizeImgUrl(url) {
     if (!url) return "";
     if (url.indexOf("/.netlify/functions/image") === 0) {
@@ -448,7 +505,6 @@
     return url;
   }
 
-  // ---------- NORMALIZE PRODUCT SHAPE ----------
   function normalizeProduct(p) {
     const variants = (p.variants || [{ color: "Default", image: "" }]).map(v => {
       let imgs = Array.isArray(v.images) ? v.images.slice() : [];
@@ -463,14 +519,22 @@
     return { ...p, variants, colorIndex: p.colorIndex || 0 };
   }
 
-  // ---------- LOAD PRODUCTS ----------
-  async function loadProducts() {
+  // ---------- LOAD DATA ----------
+  async function loadData() {
     try {
       const res = await fetch("/api/products");
       if (res.ok) {
         const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
+        
+        if (data && !Array.isArray(data) && data.products) {
+          products = data.products.map(normalizeProduct);
+          settings = data.settings || { logo: "", saleText: "" };
+        } else if (Array.isArray(data) && data.length > 0) {
           products = data.map(normalizeProduct);
+        }
+        
+        if (products.length > 0) {
+          applySettingsToUI();
           renderCatalogue();
           populateProductSelect();
           return;
@@ -478,28 +542,97 @@
       }
     } catch (e) { /* ignore */ }
 
+    // Seed if empty
     products = baseProducts.map(normalizeProduct);
     try {
       await fetch("/api/products", {
         method: "POST",
         headers: { "content-type": "application/json", "x-admin-password": adminPass() },
-        body: JSON.stringify({ products })
+        body: JSON.stringify({ products, settings })
       });
     } catch (e) { /* ignore */ }
 
+    applySettingsToUI();
     renderCatalogue();
     populateProductSelect();
   }
 
-  async function saveAllProducts() {
+  async function saveAllData() {
     const res = await fetch("/api/products", {
       method: "POST",
       headers: { "content-type": "application/json", "x-admin-password": adminPass() },
-      body: JSON.stringify({ products })
+      body: JSON.stringify({ products, settings })
     });
     if (!res.ok) throw new Error("Save failed: " + res.status);
     return res;
   }
+
+  // ---------- APPLY SETTINGS ----------
+  function applySettingsToUI() {
+    // Banner
+    const banner = document.getElementById("saleBanner");
+    if (settings.saleText) {
+      banner.textContent = settings.saleText;
+      banner.classList.remove("hidden");
+    } else {
+      banner.classList.add("hidden");
+    }
+
+    // Logo
+    const logoDiv = document.getElementById("siteLogo");
+    if (settings.logo) {
+      logoDiv.style.backgroundImage = `url('${normalizeImgUrl(settings.logo)}')`;
+      logoDiv.style.backgroundColor = "transparent";
+      logoDiv.innerHTML = "";
+    } else {
+      logoDiv.style.backgroundImage = "";
+      logoDiv.style.backgroundColor = "var(--header-bg)";
+      logoDiv.innerHTML = '<i class="fas fa-shoe-prints"></i>';
+    }
+  }
+
+  // ---------- ADMIN: LOGO UPLOAD ----------
+  document.getElementById("logoUpload").addEventListener("change", async function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = document.getElementById("logoPreview");
+    preview.innerHTML = "…";
+
+    try {
+      const fd = new FormData();
+      fd.append("image", file);
+      fd.append("key", `site-logo-${Date.now()}.jpg`);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "x-admin-password": adminPass() },
+        body: fd
+      });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      
+      settings.logo = normalizeImgUrl(data.url);
+      preview.innerHTML = "";
+      preview.style.backgroundImage = `url('${settings.logo}')`;
+      applySettingsToUI(); // Preview instantly on frontend
+    } catch (err) {
+      preview.innerHTML = '<i class="fas fa-image" style="color: var(--text-soft);"></i>';
+      alert("Logo upload failed: " + err.message);
+    }
+    this.value = "";
+  });
+
+  // ---------- ADMIN: SAVE SETTINGS ----------
+  document.getElementById("saveSettingsBtn").addEventListener("click", async function () {
+    if (!isAdmin) { alert("Log in as admin first."); return; }
+    settings.saleText = document.getElementById("saleTextInput").value.trim();
+    try {
+      await saveAllData();
+      applySettingsToUI();
+      alert("Settings saved successfully!");
+    } catch (err) {
+      alert("Save failed: " + err.message);
+    }
+  });
 
   // ---------- COLOR HELPERS ----------
   function getColorStyle(colorName) {
@@ -804,7 +937,7 @@
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   });
 
-  // ---------- ADMIN: SELECT ----------
+  // ---------- ADMIN: PRODUCT SELECT ----------
   function populateProductSelect() {
     productSelect.innerHTML = '<option value="new">+ Add New Product</option>';
     products.forEach(p => {
@@ -849,7 +982,6 @@
     return p ? p.variants : [];
   }
 
-  // ---------- ADMIN: MULTI-IMAGE UPLOADERS ----------
   function generateVariantUploaders(colorsStr, existingVariants) {
     existingVariants = existingVariants || [];
     const colors = colorsStr.split(",").map(c => c.trim()).filter(c => c.length);
@@ -896,7 +1028,6 @@
       variantRows.appendChild(row);
     });
 
-    // Attach slot handlers
     variantRows.querySelectorAll(".slot").forEach(slot => {
       const fileInput = slot.querySelector('input[type="file"]');
       const removeBtn = slot.querySelector(".slot-remove");
@@ -912,7 +1043,6 @@
         const color = slot.dataset.color;
         const slotIdx = slot.dataset.slotIndex;
 
-        // Show loading overlay
         let loading = slot.querySelector(".slot-loading");
         if (!loading) {
           loading = document.createElement("div");
@@ -937,14 +1067,11 @@
           const data = await res.json();
           const finalUrl = normalizeImgUrl(data.url);
 
-          // Update slot
           slot.dataset.image = finalUrl;
           slot.classList.add("has-img");
           slot.style.backgroundImage = `url('${finalUrl}')`;
-          // Remove icon
           const icon = slot.querySelector(".slot-icon");
           if (icon) icon.remove();
-          // Add remove button
           if (!slot.querySelector(".slot-remove")) {
             const btn = document.createElement("button");
             btn.type = "button";
@@ -957,7 +1084,6 @@
               clearSlot(slot);
             });
           }
-          // Remove loading
           if (loading) loading.remove();
         } catch (err) {
           if (loading) loading.remove();
@@ -979,19 +1105,15 @@
       slot.style.backgroundImage = "";
       slot.classList.remove("has-img");
       slot.innerHTML = '<input type="file" accept="image/*"><i class="fas fa-plus slot-icon"></i>';
-      // Reattach listeners
       const fi = slot.querySelector('input[type="file"]');
       fi.addEventListener("change", async function (e) {
-        // Same handler as above — reuse by triggering change
         slot.dispatchEvent(new Event("__rebuild"));
       });
-      // Simpler: rebuild the whole uploader
       generateVariantUploaders(colorsInput.value, collectCurrentImages());
     }
   }
 
   function collectCurrentImages() {
-    // Read current variant images from the DOM so we can re-render without losing data
     const colors = colorsInput.value.split(",").map(c => c.trim()).filter(c => c.length);
     const variants = [];
     colors.forEach(color => {
@@ -1009,7 +1131,7 @@
     return String(s).replace(/["\\]/g, "\\$&");
   }
 
-  // ---------- ADMIN: SAVE ----------
+  // ---------- ADMIN: SAVE PRODUCT ----------
   document.getElementById("uploadProductBtn").addEventListener("click", async function () {
     if (!isAdmin) { alert("Log in as admin first."); return; }
     const name = document.getElementById("newProductName").value.trim();
@@ -1046,7 +1168,7 @@
     }
 
     try {
-      await saveAllProducts();
+      await saveAllData();
       renderCatalogue();
       populateProductSelect();
       alert(`"${name}" saved. Customers will see it now.`);
@@ -1057,13 +1179,13 @@
     }
   });
 
-  // ---------- ADMIN: DELETE ----------
+  // ---------- ADMIN: DELETE PRODUCT ----------
   deleteBtn.addEventListener("click", async function () {
     if (!editingProductId) return;
     if (!confirm("Delete this product?")) return;
     products = products.filter(p => p.id !== editingProductId);
     try {
-      await saveAllProducts();
+      await saveAllData();
       renderCatalogue();
       populateProductSelect();
       productSelect.value = "new";
@@ -1082,7 +1204,7 @@
   // ---------- INIT ----------
   saveCart();
   renderCart();
-  loadProducts();
+  loadData();
   generateVariantUploaders(colorsInput.value, []);
 })();
 </script>
